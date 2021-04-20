@@ -1,9 +1,10 @@
-import "./App.css";
+import Header from "./components/Header";
+import Form from "./components/Form";
 
 const App = () => {
   return (
     <div className="App">
-      <h1>The To-Do App</h1>
+      <Header />
     </div>
   );
 };

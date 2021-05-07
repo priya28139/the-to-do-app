@@ -10,7 +10,7 @@ const App = () => {
     <div className="App">
       <Header />
       <Form toDos={toDos} setToDos={setToDos} />
-      <ToDoList />
+      <ToDoList toDos={toDos} />
       <Footer />
     </div>
   );

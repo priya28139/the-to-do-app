@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ToDo = ({ toDo }) => {
+  const [checked, setChecked] = useState(toDo.complete);
   return (
-    <li className="card" draggable={true}>
+    <li className={checked ? "card checked" : "card"} draggable={true}>
       <div className="cb-container">
-        <input className="cb-input" type="checkbox" />
+        <input
+          className="cb-input"
+          type="checkbox"
+          onClick={() => setChecked(!checked)}
+        />
         <span className="check"></span>
       </div>
       <p className="item">{toDo.task}</p>

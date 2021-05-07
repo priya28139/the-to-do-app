@@ -6,7 +6,7 @@ const ToDoList = ({ toDos }) => {
   useEffect(() => {
     let count = 0;
     toDos.map((toDo) => {
-      if (toDo.status === "Active") {
+      if (!toDo.complete) {
         count++;
       }
     });

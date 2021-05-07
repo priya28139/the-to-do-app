@@ -4,7 +4,7 @@ const Form = ({ toDos, setToDos }) => {
   const [toDo, setToDo] = useState("");
   const addToDo = () => {
     if (toDo) {
-      setToDos([...toDos, { task: toDo, status: "Active" }]);
+      setToDos([...toDos, { task: toDo, complete: false }]);
       setToDo("");
     }
   };

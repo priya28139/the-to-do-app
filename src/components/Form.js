@@ -13,6 +13,12 @@ const Form = ({ toDos, setToDos }) => {
     console.log("toDos changed!", toDos);
   }, [toDos]);
 
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      addToDo();
+    }
+  });
+
   return (
     <main>
       <div className="card add">

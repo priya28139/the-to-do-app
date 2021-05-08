@@ -1,34 +1,80 @@
 import React, { useEffect, useState } from "react";
 import ToDo from "./ToDo";
 
-const ToDoList = ({ toDos }) => {
+const ToDoList = ({ toDos, setToDos, bottomTab, setBottomTab }) => {
   const [active, setActive] = useState(0);
   useEffect(() => {
-    let count = 0;
+    let currentActive = 0;
     toDos.map((toDo) => {
       if (!toDo.complete) {
-        count++;
+        currentActive++;
       }
     });
-    setActive(count);
+    setActive(currentActive);
   }, [toDos]);
   return (
     <>
       <ul className="todos">
-        {toDos.map((toDo, index) => (
-          <ToDo toDo={toDo} key={index} />
-        ))}
+        {toDos.map((toDo, index) => {
+          if (bottomTab === "All") {
+            return (
+              <ToDo
+                toDo={toDo}
+                key={index}
+                toDos={toDos}
+                setToDos={setToDos}
+                index={index}
+              />
+            );
+          } else if (bottomTab === "Active" && !toDo.complete) {
+            return (
+              <ToDo
+                toDo={toDo}
+                key={index}
+                toDos={toDos}
+                setToDos={setToDos}
+                index={index}
+              />
+            );
+          } else if (bottomTab === "Completed" && toDo.complete) {
+            return (
+              <ToDo
+                toDo={toDo}
+                key={index}
+                toDos={toDos}
+                setToDos={setToDos}
+                index={index}
+              />
+            );
+          }
+        })}
       </ul>
       <div className="card stat">
         <p className="corner">
           <span id="items-left">{active}</span> items left
         </p>
         <div className="filter">
-          <button id="all" className="on">
+          <button
+            id="all"
+            className={bottomTab === "All" ? "on" : ""}
+            onClick={() => setBottomTab("All")}
+          >
             All
           </button>
-          <button id="active">Active</button>
-          <button id="completed">Completed</button>
+          <button
+            id="active"
+            className={bottomTab === "Active" ? "on" : ""}
+            onClick={() => setBottomTab("Active")}
+          >
+            Active
+          </button>
+          <button
+            id="completed"
+            className={bottomTab === "Completed" ? "on" : ""}
+            onClick={() => setBottomTab("Completed")}
+          >
+            Completed
+          </button>
         </div>
         <div className="corner">
           <button id="clear-completed">Clear Completed</button>

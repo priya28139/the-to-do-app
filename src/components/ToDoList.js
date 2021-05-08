@@ -12,6 +12,17 @@ const ToDoList = ({ toDos, setToDos, bottomTab, setBottomTab }) => {
     });
     setActive(currentActive);
   }, [toDos]);
+
+  const handleClearCompleted = () => {
+    let newToDos = toDos.filter((toDo) => {
+      console.log(toDo);
+      if (!toDo.complete) {
+        return toDo;
+      }
+    });
+
+    setToDos(newToDos);
+  };
   return (
     <>
       <ul className="todos">
@@ -77,7 +88,9 @@ const ToDoList = ({ toDos, setToDos, bottomTab, setBottomTab }) => {
           </button>
         </div>
         <div className="corner">
-          <button id="clear-completed">Clear Completed</button>
+          <button id="clear-completed" onClick={handleClearCompleted}>
+            Clear Completed
+          </button>
         </div>
       </div>
     </>

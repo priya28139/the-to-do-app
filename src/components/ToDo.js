@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ToDo = ({ toDo, toDos, setToDos, index }) => {
   const [checked, setChecked] = useState(toDo.complete);
+  console.log(toDo.complete, toDo.task, checked);
   console.log(index, toDo.task);
   const handleChecked = () => {
     let newToDos = toDos.map((toDo, toDoIndex) => {
@@ -14,6 +15,10 @@ const ToDo = ({ toDo, toDos, setToDos, index }) => {
     setToDos(newToDos);
     setChecked(!checked);
   };
+
+  useEffect(() => {
+    setChecked(toDo.complete);
+  }, [toDos]);
 
   const handleClearToDo = () => {
     let newToDos = toDos.filter((toDo, toDoIndex) => {

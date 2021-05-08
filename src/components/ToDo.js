@@ -1,14 +1,27 @@
 import React, { useState } from "react";
 
-const ToDo = ({ toDo }) => {
+const ToDo = ({ toDo, toDos, setToDos, index }) => {
   const [checked, setChecked] = useState(toDo.complete);
+  console.log(index, toDo.task);
+  const handleChecked = () => {
+    let newToDos = toDos.map((toDo, toDoIndex) => {
+      if (toDoIndex === index) {
+        toDo.complete = !toDo.complete;
+        return toDo;
+      }
+      return toDo;
+    });
+    setToDos(newToDos);
+    setChecked(!checked);
+  };
   return (
     <li className={checked ? "card checked" : "card"} draggable={true}>
       <div className="cb-container">
         <input
           className="cb-input"
           type="checkbox"
-          onClick={() => setChecked(!checked)}
+          onClick={handleChecked}
+          checked={checked}
         />
         <span className="check"></span>
       </div>

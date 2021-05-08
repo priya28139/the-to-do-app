@@ -7,9 +7,10 @@ import Footer from "./components/Footer";
 const App = () => {
   const [toDos, setToDos] = useState([]);
   const [bottomTab, setBottomTab] = useState("All");
+  const [darkTheme, setDarkTheme] = useState(true);
   return (
     <div className="App">
-      <Header />
+      <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
       <Form toDos={toDos} setToDos={setToDos} />
       <ToDoList
         toDos={toDos}

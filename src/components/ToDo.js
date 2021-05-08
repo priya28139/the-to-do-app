@@ -14,19 +14,29 @@ const ToDo = ({ toDo, toDos, setToDos, index }) => {
     setToDos(newToDos);
     setChecked(!checked);
   };
+
+  const handleClearToDo = () => {
+    let newToDos = toDos.filter((toDo, toDoIndex) => {
+      console.log(toDoIndex, index);
+      if (toDoIndex !== index) {
+        return toDo;
+      }
+    });
+    setToDos(newToDos);
+  };
   return (
     <li className={checked ? "card checked" : "card"} draggable={true}>
       <div className="cb-container">
         <input
           className="cb-input"
           type="checkbox"
-          onClick={handleChecked}
+          onChange={handleChecked}
           checked={checked}
         />
         <span className="check"></span>
       </div>
       <p className="item">{toDo.task}</p>
-      <button className="clear">
+      <button className="clear" onClick={handleClearToDo}>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18">
           <path
             fill="#494C6B"

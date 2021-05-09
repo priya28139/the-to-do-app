@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import ToDo from "./ToDo";
 
 const ToDoList = ({ toDos, setToDos, bottomTab, setBottomTab }) => {
@@ -15,7 +16,7 @@ const ToDoList = ({ toDos, setToDos, bottomTab, setBottomTab }) => {
 
   const handleClearCompleted = () => {
     let newToDos = toDos.filter((toDo) => {
-      console.log(toDo);
+      //console.log(toDo);
       if (!toDo.complete) {
         return toDo;
       }
@@ -23,43 +24,91 @@ const ToDoList = ({ toDos, setToDos, bottomTab, setBottomTab }) => {
 
     setToDos(newToDos);
   };
+
+  const handleDragEnd = (result) => {
+    if (result.destination) {
+      const newToDos = Array.from(toDos);
+      const [reorderedItem] = newToDos.splice(result.source.index, 1);
+      newToDos.splice(result.destination.index, 0, reorderedItem);
+
+      setToDos(newToDos);
+    }
+  };
   return (
     <>
-      <ul className="todos">
-        {toDos.map((toDo, index) => {
-          if (bottomTab === "All") {
-            return (
-              <ToDo
-                toDo={toDo}
-                key={index}
-                toDos={toDos}
-                setToDos={setToDos}
-                index={index}
-              />
-            );
-          } else if (bottomTab === "Active" && !toDo.complete) {
-            return (
-              <ToDo
-                toDo={toDo}
-                key={index}
-                toDos={toDos}
-                setToDos={setToDos}
-                index={index}
-              />
-            );
-          } else if (bottomTab === "Completed" && toDo.complete) {
-            return (
-              <ToDo
-                toDo={toDo}
-                key={index}
-                toDos={toDos}
-                setToDos={setToDos}
-                index={index}
-              />
-            );
-          }
-        })}
-      </ul>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="todos">
+          {(provided) => (
+            <ul
+              className="todos"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {toDos.map((toDo, index) => {
+                if (bottomTab === "All") {
+                  return (
+                    <Draggable
+                      key={index}
+                      draggableId={"" + index}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <ToDo
+                          provided={provided}
+                          innerRef={provided.innerRef}
+                          toDo={toDo}
+                          toDos={toDos}
+                          setToDos={setToDos}
+                          index={index}
+                        />
+                      )}
+                    </Draggable>
+                  );
+                } else if (bottomTab === "Active" && !toDo.complete) {
+                  return (
+                    <Draggable
+                      key={index}
+                      draggableId={"" + index}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <ToDo
+                          provided={provided}
+                          innerRef={provided.innerRef}
+                          toDo={toDo}
+                          toDos={toDos}
+                          setToDos={setToDos}
+                          index={index}
+                        />
+                      )}
+                    </Draggable>
+                  );
+                } else if (bottomTab === "Completed" && toDo.complete) {
+                  return (
+                    <Draggable
+                      key={index}
+                      draggableId={"" + index}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <ToDo
+                          provided={provided}
+                          innerRef={provided.innerRef}
+                          toDo={toDo}
+                          toDos={toDos}
+                          setToDos={setToDos}
+                          index={index}
+                        />
+                      )}
+                    </Draggable>
+                  );
+                }
+              })}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
       <div className="card stat">
         <p className="corner">
           <span id="items-left">{active}</span> items left
